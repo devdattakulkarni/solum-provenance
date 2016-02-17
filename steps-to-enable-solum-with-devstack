@@ -2,26 +2,36 @@
 - mkdir -p ${DEVSTACK_DIR}
 - apt-get update
 - apt-get install -y git
-- git clone https://git.openstack.org/openstack-dev/devstack.git ${DEVSTACK_DIR}
-- copy local.conf available at [1] into ${DEVSTACK_DIR}
+- sudo git clone https://git.openstack.org/openstack-dev/devstack.git ${DEVSTACK_DIR}
+- cd ${DEVSTACK_DIR}
+- Get [1] and place it in ${DEVSTACK_DIR}
+  - wget https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
 - sudo git clone https://github.com/devdattakulkarni/nova-docker.git /opt/stack/nova-docker
 - cd /opt/stack/nova-docker
-- git checkout reconciling-changes
-- python setup.py install
-- sudo groupadd docker
-- sudo gpasswd -a ${USER} docker
-- sudo chmod o=rwx /var/run/docker.sock
-- sudo service docker restart
-- git clone https://github.com/openstack/nova.git /opt/stack/nova
-- git checkout e52d236a3f1740997890cad9d4726df01d5a7e5d
-- python setup.py install
-- Edit /etc/nova/nova.conf and add following lines:
-  - compute_driver = novadocker.virt.docker.driver.DockerDriver
-  - scheduler_driver = nova.scheduler.filter_scheduler.FilterScheduler
-- sudo cp /opt/stack/nova-docker/etc/nova/rootwrap.d/docker.filters /etc/nova/rootwrap.d/.
+- sudo git checkout reconciling-changes
+- sudo git clone https://github.com/openstack/nova.git /opt/stack/nova
+- cd /opt/stack/nova
+- sudo git checkout e52d236a3f1740997890cad9d4726df01d5a7e5d
+- cd ${DEVSTACK_DIR}
+- ./stack.sh
+  - This will fail to start n-sch and n-cpu. The approach to get these
+    to work involves following steps:
+    - Edit /etc/nova/nova.conf and add following lines:
+      - compute_driver = novadocker.virt.docker.driver.DockerDriver
+      - Change the scheduler_driver variable from 'filter_scheduler' to 
+        scheduler_driver = nova.scheduler.filter_scheduler.FilterScheduler
+    - Install nova-docker
+      - cd /opt/stack/nova-docker
+      - sudo python setup.py install
+    - Add current user to the docker group and change permissions of the unix docker socket
+      - sudo gpasswd -a ${USER} docker
+      - sudo chmod o=rwx /var/run/docker.sock
+    - Copy docker filters to /etc/nova/rootwrap.d/
+      - sudo cp /opt/stack/nova-docker/etc/nova/rootwrap.d/docker.filters /etc/nova/rootwrap.d/.
 
 
 [1] https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
 
 Notes:
-- https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
+- We are currently granting rwx permissions for 'others' to the unix docker socket. We should
+  investigate what is the least amount of permissions required and just grant those.
