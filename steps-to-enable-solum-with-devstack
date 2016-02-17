@@ -1,7 +1,7 @@
 - DEVSTACK_DIR="${HOME}/devstack"
 - mkdir -p ${DEVSTACK_DIR}
-- apt-get update
-- apt-get install -y git
+- sudo apt-get update
+- sudo apt-get install -y git
 - sudo git clone https://git.openstack.org/openstack-dev/devstack.git ${DEVSTACK_DIR}
 - cd ${DEVSTACK_DIR}
 - Get [1] and place it in ${DEVSTACK_DIR}
@@ -13,7 +13,10 @@
 - cd /opt/stack/nova
 - sudo git checkout e52d236a3f1740997890cad9d4726df01d5a7e5d
 - cd ${DEVSTACK_DIR}
+- sudo apt-get install -y python-pip
+- chmod -R 777 ${DEVSTACK_DIR}
 - ./stack.sh
+  - When prompted, enter desired password
   - This will fail to start n-sch and n-cpu. The approach to get these
     to work involves following steps:
     - Edit /etc/nova/nova.conf and add following lines:
