@@ -1,3 +1,10 @@
+- Create a brand new VM
+- Create non-root user
+     - useradd solumuser -m -d /home/solumuser -s /bin/bash
+     - visudo
+     - solumuser ALL=(ALL) NOPASSWD: ALL
+- Set password for the new user
+     - passwd solumuser
 - DEVSTACK_DIR="${HOME}/devstack"
 - mkdir -p ${DEVSTACK_DIR}
 - sudo apt-get update
@@ -33,6 +40,8 @@
       - sudo cp /opt/stack/nova-docker/etc/nova/rootwrap.d/docker.filters /etc/nova/rootwrap.d/.
     - Go to n-* screens and restart them if they have failed.
 
+- Follow the steps given here:
+     - http://docs.openstack.org/developer/solum/getting_started/index.html
 
 [1] https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
 
