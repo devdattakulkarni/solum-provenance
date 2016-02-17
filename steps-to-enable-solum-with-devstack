@@ -1,10 +1,11 @@
-- Create a brand new VM
+- Create a brand new VM and login as root
 - Create non-root user
      - useradd solumuser -m -d /home/solumuser -s /bin/bash
      - visudo
      - solumuser ALL=(ALL) NOPASSWD: ALL
 - Set password for the new user
      - passwd solumuser
+- Logout and login as the new user (solumuser)
 - DEVSTACK_DIR="${HOME}/devstack"
 - mkdir -p ${DEVSTACK_DIR}
 - sudo apt-get update
