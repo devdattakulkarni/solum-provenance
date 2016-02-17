@@ -28,6 +28,7 @@
       - sudo chmod o=rwx /var/run/docker.sock
     - Copy docker filters to /etc/nova/rootwrap.d/
       - sudo cp /opt/stack/nova-docker/etc/nova/rootwrap.d/docker.filters /etc/nova/rootwrap.d/.
+    - Go to n-* screens and restart restart them if they have failed.
 
 
 [1] https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
