@@ -1,5 +1,5 @@
-- Create a brand new VM and login as root
-- Create non-root user
+- Create a brand new Ubuntu 14.04.2 VM and login as root
+- Create non-root user 'solumuser' and provide sudo previleges
      - useradd solumuser -m -d /home/solumuser -s /bin/bash
      - visudo
      - solumuser ALL=(ALL) NOPASSWD: ALL
