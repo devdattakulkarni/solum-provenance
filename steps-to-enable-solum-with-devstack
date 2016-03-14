@@ -6,12 +6,19 @@
 - cd ${DEVSTACK_DIR}
 - Get [1] and place it in ${DEVSTACK_DIR}
   - wget https://raw.githubusercontent.com/devdattakulkarni/solum-provenance/master/local.conf
-- sudo git clone https://github.com/devdattakulkarni/nova-docker.git /opt/stack/nova-docker
+
+- sudo git clone https://github.com/openstack/nova-docker.git /opt/stack/nova-docker
 - cd /opt/stack/nova-docker
-- sudo git checkout reconciling-changes
+- sudo git checkout 7e55fd551ef4faf3499a8db056efc9535c20e434
+
 - sudo git clone https://github.com/openstack/nova.git /opt/stack/nova
 - cd /opt/stack/nova
-- sudo git checkout e52d236a3f1740997890cad9d4726df01d5a7e5d
+- sudo git checkout 859ff4893f699b680fec4db7dedd3bec8c8d0a1c
+
+- sudo git clone https://github.com/openstack/neutron.git /opt/stack/neutron
+- cd /opt/stack/neutron
+- sudo git checkout 775893bb7f61c4641acbcb4ae16edf16e0989c39
+
 - cd ${DEVSTACK_DIR}
 - ./stack.sh
   - This will fail to start n-sch and n-cpu. The approach to get these
